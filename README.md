@@ -1,1 +1,0 @@
-# particle41-devops-team-challenge
