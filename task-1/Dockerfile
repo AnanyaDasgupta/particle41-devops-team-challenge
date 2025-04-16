@@ -1,26 +1,23 @@
-# Use a minimal Python image
-FROM python:3.12-slim
-
-# Set environment variables to prevent .pyc files and ensure stdout/stderr are unbuffered
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Start from a minimal Python 3.12 Alpine image
+FROM python:alpine
 
 # Set working directory
 WORKDIR /app
 
-# Install pip dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
+# Copy the app files into the image
 COPY . .
 
-# Create non-root user and switch to it
-RUN useradd --create-home appuser
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Create a non-root user
+RUN adduser -D appuser
+
+# Use the non-root user
 USER appuser
 
-# Expose the port Flask runs on
+# Expose the port
 EXPOSE 5000
 
-# Run the Flask app
+# Run the application
 CMD ["python", "SimpleTimeService.py"]
