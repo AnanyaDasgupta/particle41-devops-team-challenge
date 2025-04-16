@@ -164,6 +164,3 @@ Make sure port 5000 is open on your machine and not used by another service.
 **Q: What’s Docker, in simple terms?**  
 Docker lets you “package” your app with everything it needs so it can run anywhere, on any computer — no setup headaches!
 
----
-
-Enjoy the service, and feel free to reach out if you have any questions or want to contribute!
