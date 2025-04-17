@@ -3,12 +3,11 @@ provider "aws" {
 }
 
 module "vpc" {
-  source              = "./modules/vpc"
-  vpc_cidr            = var.vpc_cidr
-  public_subnets      = var.public_subnets
-  private_subnets     = var.private_subnets
-  availability_zones  = var.availability_zones
-  project_name        = var.project_name
+  source               = "./modules/vpc"
+  vpc_cidr             = var.vpc_cidr
+  public_subnet_cidrs  = var.public_subnets
+  private_subnet_cidrs = var.private_subnets
+  region               = var.region 
 }
 
 module "alb" {
@@ -21,15 +20,15 @@ module "alb" {
 }
 
 module "ecs" {
-  source                  = "./modules/ecs"
-  vpc_id                  = module.vpc.vpc_id
-  private_subnet_ids      = module.vpc.private_subnet_ids
-  cluster_name            = var.project_name
-  container_name          = var.container_name
-  container_image         = var.container_image
-  container_port          = var.container_port
-  alb_target_group_arn    = module.alb.target_group_arn
-  alb_listener_arn        = module.alb.listener_arn
+  source                      = "./modules/ecs"
+  vpc_id                      = module.vpc.vpc_id
+  private_subnet_ids          = module.vpc.private_subnet_ids
+  cluster_name                = var.project_name
+  container_name              = var.container_name
+  container_image             = var.container_image
+  container_port              = var.container_port
+  alb_target_group_arn        = module.alb.target_group_arn
+  alb_listener_arn            = module.alb.listener_arn
   ecs_task_execution_role_arn = data.aws_iam_role.ecs_task_exec.arn
 }
 
