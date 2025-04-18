@@ -20,7 +20,7 @@ Welcome to **SimpleTimeService**, a minimal microservice that tells you the curr
 ## 🚀 What You Can Do
 | Task                             | Where to Look                      | Tech Stack                  |
 |----------------------------------|------------------------------------|-----------------------------|
-| 🔧 Run the app locally or in Docker | [`SimpleTimeService/`](./SimpleTimeService/) | Python, Flask, Docker       |
+| 🔧 Run the app locally or in Docker | [`app/`](./app/) | Python, Flask, Docker       |
 | ☁️ Deploy it on AWS using Terraform | [`terraform/`](./terraform/)       | Terraform, AWS ECS Fargate  |
 
 ## 🔍 Quick Overview
@@ -41,7 +41,7 @@ You can run it with:
 - `python SimpleTimeService.py`
 - or via Docker: `docker run -p 5000:5000 ananyadasgupta/simpletimeservice:latest`
 
-📍 Details here → [`SimpleTimeService/README.md`](./SimpleTimeService/README.md)
+📍 Details here → [`app/README.md`](./app/README.md)
 
 ### ☁️ The Cloud Deployment
 Using the Terraform module in `terraform/`, you can:
