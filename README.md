@@ -46,3 +46,52 @@ Using the Terraform module in `terraform/`, you can:
 - The infrastructure is completely defined with Terraform, making deployment repeatable and scalable.
 
 📍 Details here → [`terraform/README.md`](./terraform/README.md)
+
+## BONUS Section !!!
+
+### CI/CD Pipeline Overview
+
+This project uses GitHub Actions to automate the process of building Docker images, running Terraform plans, and applying infrastructure changes.
+
+The pipeline consists of the following steps:
+
+1. **Build Docker Image**:
+   - Builds a Docker image using the `Dockerfile` located in the `app/` directory.
+   - Pushes the built image to Docker Hub.
+
+2. **Terraform Plan**:
+   - Runs `terraform init -reconfigure` to initialize Terraform and ensure the environment is set up with the correct lock file and provider versions.
+   - Executes `terraform plan` to create a plan for infrastructure changes.
+   - Uploads the Terraform plan as an artifact for later use.
+
+3. **Terraform Apply (Manual Approval)**:
+   - Requires manual approval before applying infrastructure changes.
+   - Downloads the Terraform plan artifact and runs `terraform apply` to deploy the infrastructure.
+
+### Setup
+
+1. **AWS Credentials**:
+   Ensure that the following AWS credentials are set in the GitHub Secrets for your repository:
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+   - `AWS_DEFAULT_REGION`
+
+2. **Docker Hub Credentials**:
+   Ensure that your Docker Hub credentials are set in the GitHub Secrets:
+   - `DOCKER_USERNAME`
+   - `DOCKER_PASSWORD`
+
+3. **Terraform Lock File**:
+   The `.terraform.lock.hcl` file is automatically generated during the `terraform init -reconfigure` step in the pipeline. This ensures that the provider dependencies are locked to specific versions, ensuring consistent deployments.
+
+### Troubleshooting
+
+If you encounter issues with the Terraform lock file not being created or not persisting between jobs, ensure the following:
+
+1. Terraform is initialized with `terraform init -reconfigure` in both the `plan` and `apply` jobs to regenerate the lock file if needed.
+2. Ensure that the correct AWS credentials are set in your GitHub Secrets.
+3. If Terraform errors persist related to provider versions, delete the `.terraform` directory and re-run the pipeline to regenerate the configuration and lock file.
+
+### Conclusion
+
+This setup ensures a robust CI/CD pipeline that automatically builds, plans, and applies infrastructure changes, while maintaining the security and consistency of your AWS infrastructure and Docker deployments.
