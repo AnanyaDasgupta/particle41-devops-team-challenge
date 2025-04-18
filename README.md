@@ -6,12 +6,15 @@ Welcome to **SimpleTimeService**, a minimal microservice that tells you the curr
 
 ```
 .
-├── SimpleTimeService/        # The actual Python + Flask microservice
+├── app/        # The actual Python + Flask microservice
 │   └── README.md             # App-level instructions
 ├── terraform/                # Infrastructure code to deploy on AWS
 │   └── README.md             # Infra-level documentation
-├── .gitignore
-└── README.md                 # You're here!
+├── .gitignore                # Gitignore configuration
+├── .github/                  # GitHub Actions CI/CD pipeline
+│   └── workflows/            # CI/CD workflow files
+│       └── ci-cd.yml          # Main CI/CD pipeline
+└── README.md                 # You're here! Project-level documentation
 ```
 
 ## 🚀 What You Can Do
