@@ -68,16 +68,6 @@ jobs:
           cd terraform
           terraform plan -out=tfplan
 
-      - name: Check lock file existence before upload
-        run: |
-          ls -l terraform
-          if [ -f terraform/.terraform.lock.hcl ]; then
-            echo "✅ Lock file is present."
-          else
-            echo "❌ Lock file is missing!"
-            exit 1
-          fi
-
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
@@ -85,11 +75,6 @@ jobs:
           name: tfplan
           path: terraform/tfplan
 
-      - name: Upload Lock File
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-lock
-          path: terraform/.terraform.lock.hcl
 
 
   apply:
@@ -116,10 +101,6 @@ jobs:
         with:
           name: tfplan
 
-      - name: Download Lock File
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-lock
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -127,6 +108,11 @@ jobs:
       - name: Move tfplan to terraform directory
         run: |
           mv tfplan terraform/  # Move downloaded tfplan to terraform directory
+
+      - name: Re-run Terraform Init (with reconfigure)
+        run: |
+          cd terraform
+          terraform init -reconfigure
 
       - name: Terraform Apply
         run: |
