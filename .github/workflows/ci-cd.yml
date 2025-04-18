@@ -51,6 +51,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Clean Terraform directory
+        run: |
+          cd terraform
+          rm -rf .terraform
+          rm -f terraform.tfstate.lock.info
+
+
       - name: Terraform Init
         run: |
           cd terraform
@@ -97,7 +104,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan
-          
+
       - name: Upload Lock File
         uses: actions/upload-artifact@v4
         with:
