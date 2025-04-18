@@ -32,7 +32,6 @@ jobs:
           docker push ananyadasgupta/simpletimeservice:latest
 
   # Job for running Terraform commands (init, plan, apply)
-jobs:
   terraform-plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
