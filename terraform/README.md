@@ -190,6 +190,25 @@ terraform destroy
 
 ---
 
+## BONUS SECTION !!!
+
+### 🔒 State Locking with Terraform
+To ensure that Terraform state is consistent and to avoid race conditions when multiple people or processes are running Terraform in parallel, **state locking** is enabled in this project. The state file is locked using an **S3 bucket** and **DynamoDB** for locking.
+
+#### How It Works:
+1. **S3** is used to store the Terraform state file (`terraform.tfstate`).
+2. **DynamoDB** is used to provide a locking mechanism to prevent concurrent updates to the state.
+
+#### Benefits:
+- **Prevents conflicts** when multiple users are running Terraform at the same time.
+- **Ensures consistency** by allowing only one process to update the state at a time.
+
+The state locking mechanism is fully managed by Terraform's `backend` configuration and is already set up in the `terraform/` directory.
+
+---
+
+By following these steps, you'll have a safe and consistent Terraform environment for managing the infrastructure for SimpleTimeService.
+
 ## ❓ FAQ
 
 **Q:** Why does my service show a timeout?  
