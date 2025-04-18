@@ -68,6 +68,17 @@ jobs:
           cd terraform
           terraform plan -out=tfplan
 
+      - name: Check lock file existence before upload
+        run: |
+          ls -l terraform
+          if [ -f terraform/.terraform.lock.hcl ]; then
+            echo "✅ Lock file is present."
+          else
+            echo "❌ Lock file is missing!"
+            exit 1
+          fi
+
+
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
