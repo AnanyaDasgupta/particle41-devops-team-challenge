@@ -34,6 +34,8 @@ jobs:
   # Job for running Terraform commands (init, plan, apply)
   terraform_deployment:
     runs-on: ubuntu-latest
+    environment:
+      name: terraform-apply
     needs: build_and_push_docker_image
     steps:
       - name: Checkout code
@@ -60,15 +62,15 @@ jobs:
           cd ./terraform
           terraform plan
 
-      # Manual approval for sensitive changes
-      - name: Wait for manual approval
-        uses: peter-evans/wait-for-approval@v2
-        with:
-          environment: terraform-apply   # The environment name you created in GitHub Actions Environments
-        id: approval
+      # # Manual approval for sensitive changes
+      # - name: Wait for manual approval
+      #   uses: peter-evans/wait-for-approval@v2
+      #   with:
+      #     environment: terraform-apply   # The environment name you created in GitHub Actions Environments
+      #   id: approval
 
       - name: Terraform Apply (Manual Approval)
-        if: steps.approval.outputs.approved == 'true'
+        # if: steps.approval.outputs.approved == 'true'
         run: |
           cd ./terraform
           terraform apply
